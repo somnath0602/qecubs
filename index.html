@@ -509,28 +509,16 @@
 
             // Robust JSON Extraction
 
-let jsonString = rawTextResponse;
-
-const startIndex = jsonString.indexOf('{');
-
-const endIndex = jsonString.lastIndexOf('}');
-
-
-if (startIndex !== -1 && endIndex !== -1) {
-
-jsonString = jsonString.substring(startIndex, endIndex + 1);
-
-}
-
-
-// Strip out invisible control characters that frequently break JSON parsers
-
-jsonString = jsonString.replace(/[\u0000-\u0019]+/g, "");
-
-
-try {
-
-return JSON.parse(jsonString); 
+            let jsonString = rawTextResponse;
+            const startIndex = jsonString.indexOf('{');
+            const endIndex = jsonString.lastIndexOf('}');
+            if (startIndex !== -1 && endIndex !== -1) {
+                jsonString = jsonString.substring(startIndex, endIndex + 1);
+            }
+            // Strip out invisible control characters that frequently break JSON parsers
+            jsonString = jsonString.replace(/[\u0000-\u0019]+/g, "");
+            try {
+                return JSON.parse(jsonString); 
             }
         }
 
