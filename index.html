@@ -36,7 +36,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #fafaf9; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; overflow-x: hidden; }
         
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -56,39 +56,43 @@
             padding: 1rem;
         }
         .svg-player-container svg {
-            width: 100%; height: 100%; max-height: 500px; display: block;
+            width: 100%; height: 100%; max-height: 550px; display: block;
         }
 
         .orb-loader {
-            width: 100px; height: 100px; border-radius: 50%;
+            width: 90px; height: 90px; border-radius: 50%;
             background: linear-gradient(135deg, #ca8a04, #15803d);
             animation: pulse-orb 2s infinite ease-in-out, spin 3s infinite linear;
-            box-shadow: 0 0 40px rgba(202, 138, 4, 0.6);
+            box-shadow: 0 0 35px rgba(202, 138, 4, 0.5);
         }
         @keyframes pulse-orb { 0%, 100% { transform: scale(0.9); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .ai-content p { margin-bottom: 1.5rem; line-height: 1.8; color: #44403c; font-size: 1.125rem; }
+        /* Prose styling for AI explanations */
+        .ai-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #44403c; font-size: 1.125rem; }
         .ai-content strong { color: #1c1917; font-weight: 800; }
         .ai-content h3 { color: #1c1917; font-weight: 900; font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; letter-spacing: -0.025em; }
         .ai-content h4 { color: #292524; font-weight: 800; font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-        .ai-content ul { list-style-type: disc; margin-left: 2rem; margin-bottom: 1.5rem; color: #44403c; font-size: 1.125rem; }
+        .ai-content ul, .ai-content ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #44403c; font-size: 1.125rem; }
+        .ai-content ul { list-style-type: disc; }
+        .ai-content ol { list-style-type: decimal; }
         .ai-content li { margin-bottom: 0.5rem; }
-        .ai-content code { background-color: #f5f5f4; padding: 0.2rem 0.4rem; border-radius: 0.375rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #854d0e; }
+        .ai-content code { background-color: #f5f5f4; padding: 0.2rem 0.4rem; border-radius: 0.375rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #854d0e; border: 1px solid #e7e5e4; }
+        .ai-content pre { background-color: #1c1917; color: #f5f5f4; padding: 1.5rem; border-radius: 1rem; overflow-x: auto; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+        .ai-content pre code { background-color: transparent; padding: 0; color: inherit; border: none; }
     </style>
 </head>
 <body class="flex h-screen text-stone-800 antialiased selection:bg-brand-200 selection:text-brand-900">
 
-    <!-- Desktop Sidebar -->
-    <aside class="w-72 bg-white border-r border-stone-200 flex flex-col justify-between hidden lg:flex transition-all duration-300 z-20 shrink-0 shadow-lg">
+    <aside class="w-72 bg-white border-r border-stone-200 flex flex-col justify-between hidden lg:flex transition-all duration-300 z-20 shrink-0 shadow-xl">
         <div>
             <!-- Text-only Logo -->
-            <div class="h-28 flex flex-col items-center justify-center px-4 border-b border-stone-100 cursor-pointer pt-6 pb-4" onclick="navigateTo('home')">
-                <h1 class="text-5xl font-black text-brand-700 tracking-[0.1em] uppercase drop-shadow-sm">QECUBS</h1>
-                <span class="text-[10px] font-black text-forest-700 mt-2 uppercase tracking-[0.2em]">Elite Academic Engine</span>
+            <div class="h-32 flex flex-col items-center justify-center px-4 border-b border-stone-100 cursor-pointer pt-6 pb-4" onclick="navigateTo('home')">
+                <h1 class="text-5xl font-black text-brand-700 tracking-[0.15em] uppercase drop-shadow-sm">QECUBS</h1>
+                <span class="text-[10px] font-black text-forest-700 mt-2 uppercase tracking-[0.25em]">Elite Academic Engine</span>
             </div>
             
-            <nav class="p-6 space-y-3 mt-4">
+            <nav class="p-6 space-y-3 mt-2">
                 <button onclick="navigateTo('home')" id="nav-home" class="w-full flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-bold transition-all bg-brand-50 text-brand-800 shadow-sm border border-brand-200 hover:shadow-md">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Research Hub
@@ -100,7 +104,7 @@
             </nav>
         </div>
         
-        <div class="p-6 border-t border-stone-100 bg-gradient-to-b from-transparent to-stone-50">
+        <div class="p-6 border-t border-stone-100 bg-stone-50/50">
             <div id="user-profile-section" class="flex items-center gap-4 cursor-pointer p-3 rounded-2xl hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-stone-200" onclick="openProfileModal()">
                 <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-600 to-forest-700 text-white flex items-center justify-center font-bold text-xl shadow-inner ring-2 ring-white" id="user-avatar">
                     <svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -115,18 +119,18 @@
 
     <div class="lg:hidden fixed top-0 left-0 right-0 h-20 bg-white/95 backdrop-blur-md border-b border-stone-200 z-30 flex items-center justify-between px-6 shadow-sm">
         <div class="h-16 cursor-pointer flex items-center" onclick="navigateTo('home')">
-            <h1 class="text-3xl font-black text-brand-700 tracking-widest uppercase">QECUBS</h1>
+            <h1 class="text-3xl font-black text-brand-700 tracking-[0.2em] uppercase">QECUBS</h1>
         </div>
         <div class="flex gap-3">
-            <button onclick="navigateTo('home')" class="text-stone-600 p-2 bg-stone-100 rounded-lg active:bg-stone-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
-            <button onclick="navigateTo('history')" class="text-stone-600 p-2 bg-stone-100 rounded-lg active:bg-stone-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
-            <button onclick="openProfileModal()" class="text-brand-700 p-2 bg-brand-100 rounded-lg active:bg-brand-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></button>
+            <button onclick="navigateTo('home')" class="text-stone-600 p-2.5 bg-stone-100 rounded-xl active:bg-stone-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
+            <button onclick="navigateTo('history')" class="text-stone-600 p-2.5 bg-stone-100 rounded-xl active:bg-stone-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
+            <button onclick="openProfileModal()" class="text-brand-700 p-2.5 bg-brand-100 rounded-xl active:bg-brand-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></button>
         </div>
     </div>
 
-    <main class="flex-1 flex flex-col h-full overflow-hidden relative pt-20 lg:pt-0 bg-[#f7f6f3]">
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative pt-20 lg:pt-0">
         
-        <!-- Home View -->
+        <!-- Home / Search View -->
         <div id="view-home" class="flex-1 overflow-y-auto w-full flex flex-col items-center justify-center p-6 transition-opacity duration-500">
             <div class="max-w-4xl w-full text-center space-y-8">
                 
@@ -135,7 +139,7 @@
                     A++ Academic Engine Online
                 </div>
                 
-                <h1 class="text-4xl md:text-5xl lg:text-7xl font-black text-stone-900 tracking-tighter leading-[1.1]">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-stone-900 tracking-tighter leading-[1.1]">
                     Deconstruct the Complex. <br/>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-forest-600 to-brand-700 relative inline-block mt-2">
                         Simulate Reality.
@@ -143,7 +147,7 @@
                 </h1>
                 
                 <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto font-medium mt-8 leading-relaxed">
-                    Submit advanced queries in theoretical physics, higher mathematics, biology, or software engineering. QECUBS generates mathematically flawless explanations and dynamic visual models.
+                    Submit advanced queries in theoretical physics, mathematics, or software engineering. QECUBS generates mathematically flawless explanations and dynamic visual models.
                 </p>
                 
                 <div class="relative group mt-12 max-w-3xl mx-auto w-full">
@@ -153,55 +157,43 @@
                     <textarea 
                         id="search-input" 
                         rows="3"
-                        class="w-full pl-16 pr-6 py-6 bg-white border-4 border-stone-200 rounded-[2rem] shadow-xl focus:outline-none focus:border-brand-500 focus:ring-8 focus:ring-brand-500/10 transition-all text-xl md:text-2xl resize-none placeholder-stone-400 font-medium text-stone-900 mb-4"
-                        placeholder="E.g., Quantum Mechanics, C Programming Flowcharts, Wave-Particle Duality..."
+                        class="w-full pl-16 pr-6 py-6 bg-white border-4 border-stone-200 rounded-[2rem] shadow-xl focus:outline-none focus:border-brand-500 focus:ring-8 focus:ring-brand-500/10 transition-all text-xl md:text-2xl resize-none placeholder-stone-400 font-medium text-stone-900 mb-6"
+                        placeholder="E.g., Quantum Mechanics, CPU Architecture, Quicksort Algorithm..."
                         required
                     ></textarea>
                     
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="triggerSearch('explain')" class="flex-1 bg-stone-900 hover:bg-stone-800 text-white font-black text-lg py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <button onclick="triggerSearch('explain')" class="flex-1 bg-stone-900 hover:bg-stone-800 text-white font-black text-lg py-5 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-3">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             Explain Topic
                         </button>
-                        <button onclick="triggerSearch('generate_qa')" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-black text-lg py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <button onclick="triggerSearch('generate_qa')" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-black text-lg py-5 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-3">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             Generate Q & A
                         </button>
                     </div>
                 </div>
 
-                <!-- Quick Prompts relevant to 1st year engineering -->
-                <div class="flex flex-wrap justify-center gap-4 mt-10">
-                    <button type="button" onclick="quickSearch('Explain C Programming Arrays and Memory Allocation', 'explain')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-brand-500 hover:text-brand-800 transition-all shadow-sm hover:shadow-md">💻 C Programming</button>
-                    <button type="button" onclick="quickSearch('Python Basics: Dictionary comprehensions', 'explain')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-forest-500 hover:text-forest-800 transition-all shadow-sm hover:shadow-md">🐍 Python Basics</button>
-                    <button type="button" onclick="quickSearch('Quantum Physics: Wave-Particle Duality', 'explain')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-brand-500 hover:text-brand-800 transition-all shadow-sm hover:shadow-md">⚛️ Quantum Physics</button>
-                    <button type="button" onclick="quickSearch('Linear Algebra: Matrix Transformations', 'explain')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-brand-500 hover:text-brand-800 transition-all shadow-sm hover:shadow-md">📐 Linear Algebra</button>
+                <!-- Quick Prompts -->
+                <div class="flex flex-wrap justify-center gap-4 mt-12">
+                    <button type="button" onclick="quickSearch('Explain C Programming Arrays and Memory Allocation', 'explain')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-brand-500 hover:bg-brand-50 hover:text-brand-800 transition-all shadow-sm">💻 Memory Allocation</button>
+                    <button type="button" onclick="quickSearch('Quantum Physics: Wave-Particle Duality', 'explain')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-forest-500 hover:bg-forest-50 hover:text-forest-800 transition-all shadow-sm">⚛️ Wave-Particle Duality</button>
+                    <button type="button" onclick="quickSearch('Cellular Respiration cycle', 'generate_qa')" class="px-5 py-3 bg-white border-2 border-stone-200 rounded-2xl text-sm font-bold text-stone-600 hover:border-brand-500 hover:bg-brand-50 hover:text-brand-800 transition-all shadow-sm">🔬 Cellular Respiration (Q&A)</button>
                 </div>
             </div>
         </div>
 
-        <div id="view-loading" class="hidden flex-1 flex flex-col items-center justify-center p-6 bg-white/95 backdrop-blur-xl absolute inset-0 z-10">
+        <div id="view-loading" class="hidden flex-1 flex flex-col items-center justify-center p-6 bg-stone-50/95 backdrop-blur-xl absolute inset-0 z-10">
             <div class="orb-loader mb-12"></div>
             <h3 class="text-4xl md:text-5xl font-black text-stone-900 mb-6 tracking-tight text-center">Synthesizing Data...</h3>
-            <p class="text-stone-600 text-center max-w-lg text-xl md:text-2xl font-medium leading-relaxed" id="loading-text">Engaging elite academic protocols and rendering accurate visual simulations.</p>
+            <p class="text-stone-600 text-center max-w-lg text-xl md:text-2xl font-medium leading-relaxed" id="loading-text">Engaging elite academic protocols and compiling raw vector visual simulations.</p>
         </div>
 
         <div id="view-result" class="hidden flex-1 overflow-y-auto w-full p-4 md:p-8 lg:p-12">
             <div class="max-w-[1600px] mx-auto space-y-8">
                 
-                <div id="clarification-banner" class="hidden bg-brand-50 border-l-[8px] border-brand-500 p-6 rounded-r-3xl shadow-sm">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1">
-                            <svg class="h-8 w-8 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <div class="ml-5">
-                            <p class="text-xl text-brand-900 font-bold" id="clarification-text"></p>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b-4 border-stone-200 pb-8">
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-stone-900 tracking-tight leading-tight flex-1" id="result-title">Analysis Result</h2>
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-stone-900 tracking-tight leading-tight flex-1" id="result-title">Analysis Result</h2>
                     <button onclick="navigateTo('home')" class="shrink-0 bg-white border-2 border-stone-200 text-stone-800 hover:bg-stone-900 hover:text-white hover:border-stone-900 font-black text-lg py-4 px-8 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-md">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> New Query
                     </button>
@@ -210,8 +202,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     <!-- Left: Explanation -->
                     <div class="lg:col-span-7 xl:col-span-8 space-y-8">
-                        <div class="bg-white p-6 md:p-12 rounded-[2.5rem] shadow-lg border border-stone-200 ai-content overflow-hidden" id="result-explanation">
-                            <!-- Theory injected here -->
+                        <div class="bg-white p-6 md:p-12 rounded-[2.5rem] shadow-xl border border-stone-200 ai-content overflow-hidden" id="result-explanation">
+                            <!-- Explanation injected here -->
                         </div>
                     </div>
 
@@ -227,14 +219,15 @@
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Replay
                                 </button>
                             </div>
+                            <!-- Simulation Container -->
                             <div class="svg-player-container aspect-square md:aspect-video lg:aspect-square" id="svg-player">
                                 <!-- Animated SVG injected here -->
                             </div>
                         </div>
                         <div class="bg-brand-50 border border-brand-200 rounded-2xl p-5 shadow-inner">
-                            <p class="text-sm text-brand-800 font-bold flex items-start gap-3">
-                                <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                This dynamic visual model is AI-generated based on the strict mathematical and scientific parameters of the query.
+                            <p class="text-sm text-brand-800 font-bold flex items-start gap-3 leading-relaxed">
+                                <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                This dynamic visual model is natively generated via raw vector mathematics corresponding to your query parameters.
                             </p>
                         </div>
                     </div>
@@ -260,6 +253,7 @@
                 </div>
 
                 <div id="history-list" class="space-y-6 hidden">
+                    <!-- Cards injected here -->
                 </div>
             </div>
         </div>
@@ -290,11 +284,15 @@
         </div>
     </div>
 
-    <div id="error-toast" class="fixed bottom-10 right-10 bg-white border-l-8 border-red-600 text-stone-900 px-8 py-6 rounded-[2rem] shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-5">
-        <div class="bg-red-50 p-3 rounded-2xl text-red-600 border border-red-100">
-            <svg class="w-8 h-8 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <!-- Error Toast -->
+    <div id="error-toast" class="fixed bottom-10 right-10 left-10 md:left-auto bg-white border-l-8 border-red-600 text-stone-900 px-8 py-6 rounded-[2rem] shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-5 max-w-lg">
+        <div class="bg-red-50 p-3 rounded-2xl text-red-600 border border-red-100 shrink-0">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
-        <span id="error-toast-msg" class="font-black text-xl">System Fault.</span>
+        <div class="flex flex-col">
+            <span class="font-black text-xl text-stone-900">System Fault</span>
+            <span id="error-toast-msg" class="font-medium text-stone-600 text-sm mt-1">An error occurred.</span>
+        </div>
     </div>
 
     <script type="module">
@@ -302,10 +300,11 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'qecubs-elite';
+        // Environment variables mapped safely
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'qecubs-engine';
         let firebaseConfig = {};
         try { firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {}; } 
-        catch (e) { console.error("Config parse error"); }
+        catch (e) { console.warn("Local env: Firebase config not found."); }
 
         let auth, db;
         try {
@@ -313,13 +312,14 @@
             auth = getAuth(app);
             db = getFirestore(app);
         } catch(e) {
-            console.error("Firebase init bypass for isolated environment");
+            console.warn("Firebase initialized bypassed - running in isolated mode.");
         }
 
         let currentUser = null;
         let currentSvgContent = '';
         let historyData = [];
 
+        // DOM Mapping
         const views = {
             home: document.getElementById('view-home'),
             loading: document.getElementById('view-loading'),
@@ -340,7 +340,7 @@
                     await signInAnonymously(auth);
                 }
             } catch (error) {
-                showError("Auth fault. Data persistence disabled.");
+                showError("Auth fault. Data persistence to Vault disabled.");
             }
         }
 
@@ -359,6 +359,7 @@
             if(views[viewName]) {
                 views[viewName].classList.remove('hidden');
                 
+                // Update navigation visual states safely
                 if(viewName !== 'loading' && viewName !== 'result') {
                     Object.values(navBtns).forEach(btn => {
                         btn.className = btn.className.replace(/bg-brand-50|text-brand-800|border-brand-200|shadow-sm|border-transparent/g, '');
@@ -410,7 +411,7 @@
             const toast = document.getElementById('error-toast');
             document.getElementById('error-toast-msg').textContent = msg;
             toast.classList.remove('translate-y-40', 'opacity-0');
-            setTimeout(() => { toast.classList.add('translate-y-40', 'opacity-0'); }, 5000);
+            setTimeout(() => { toast.classList.add('translate-y-40', 'opacity-0'); }, 6000);
         }
 
         window.quickSearch = function(query, mode) {
@@ -421,7 +422,7 @@
         window.triggerSearch = async function(mode) {
             const queryText = document.getElementById('search-input').value.trim();
             if(!queryText) {
-                showError("Please enter a topic to research.");
+                showError("Please enter a topic or paste code to research.");
                 return;
             }
             await processSearch(queryText, mode);
@@ -442,44 +443,43 @@
 
             try {
                 const resultData = await callGeminiAPI(queryText, mode);
+                resultData.query_mode = mode; // Inject mode into payload for history referencing
                 
-                // Add mode to the saved data so we know in history if it was a Q&A
-                resultData.query_mode = mode;
+                if (saveToHist && currentUser && db) {
+                    await saveHistory(queryText, resultData);
+                }
                 
-                if (saveToHist && currentUser && db) await saveHistory(queryText, resultData);
                 renderResult(resultData);
                 navigateTo('result');
                 document.getElementById('search-input').value = ''; 
             } catch (error) {
                 console.error("Engine Fault:", error);
-                showError("JSON Parsing Error or AI Overload. The AI returned an invalid format. Please try again.");
+                showError("Data Extraction Failure. The AI returned an invalid schema structure. Please alter your query and try again.");
                 navigateTo('home');
             }
         }
 
         async function callGeminiAPI(userQuery, mode) {
-            const apiKey = ""; // Managed by environment
+            const apiKey = ""; // Managed dynamically by Canvas
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
-            let instructionLogic = "";
-            if (mode === 'generate_qa') {
-                instructionLogic = `The user will provide a topic (e.g., "${userQuery}"). You must FIRST generate a highly challenging, academic-level QUESTION regarding that topic, and then provide the detailed ANSWER in the 'explanation' field. Title should reflect the generated question.`;
-            } else {
-                instructionLogic = `The user will provide a topic (e.g., "${userQuery}"). You must explain this topic in extreme, academic detail in the 'explanation' field.`;
-            }
+            const instructionLogic = mode === 'generate_qa' 
+                ? `You must FIRST generate a highly challenging, academic-level QUESTION regarding the topic "${userQuery}". Then provide the detailed ANSWER in the 'explanation' field. The 'title' should be the generated question.`
+                : `Explain the topic "${userQuery}" in extreme, academic detail in the 'explanation' field.`;
 
-            const systemPrompt = `You are QECUBS, an A++ elite academic tutor and highly advanced simulation engine. Your purpose is to provide mathematically and scientifically flawless explanations for complex topics, especially in 1st-year engineering concepts like C programming, Python basics, Quantum Physics, and Linear Algebra.
+            // STRICT PROMPTING to avoid JSON corruption on complex SVGs
+            const systemPrompt = `You are QECUBS, an A++ elite academic tutor and highly advanced simulation engine. Provide mathematically and scientifically flawless explanations.
 
             ${instructionLogic}
 
-            You MUST strictly output a JSON object matching the provided schema.
+            CRITICAL DIRECTIVES:
+            1. Output strictly valid JSON matching the schema.
+            2. 'explanation': Use HTML tags (<p>, <strong>, <h3>, <ul>, <pre>, <code>) for formatting. Include formulas. Be extremely thorough.
+            3. 'visual_simulation_svg': CRITICAL. Generate a highly accurate, beautifully animated, raw SVG string (must include viewBox). It MUST contain <animate>, <animateTransform>, or CSS animations to act as a dynamic video simulation of the concept. 
+            4. Use vibrant colors suitable for a dark background (#1c1917).
+            5. IMPORTANT: DO NOT WRAP YOUR RESPONSE IN MARKDOWN BACKTICKS. DO NOT INCLUDE \`\`\`json. ESCAPE ALL INTERNAL QUOTES AND NEWLINES PROPERLY TO ENSURE VALID JSON.`;
 
-            RULES for Output:
-            1. 'query_type': "theory" or "code".
-            2. 'clarification': If vague, start with "I think you mean...". Otherwise, empty string.
-            3. 'explanation': Provide a rigorous, highly accurate, and engaging academic explanation (or answer to the generated question). Use HTML tags (<p>, <strong>, <h3>, <ul>, <code>) for formatting. Include formulas using plain text or HTML math representations if necessary. Be extremely thorough and step-by-step.
-            4. 'visual_simulation_svg': CRITICAL. You must generate a highly accurate, beautifully animated, raw SVG string (must include viewBox). It MUST contain <animate>, <animateTransform>, or <style> with CSS animations to act as a dynamic, accurate video simulation of the concept (e.g., oscillating waves, sorting algorithms, orbital mechanics, matrix transforms). Use vibrant colors suitable for a dark background (#1c1917). DO NOT wrap the JSON or the SVG in markdown backticks \`\`\` \`\`\`.`;
-
+            // Enforcing JSON application mode
             const payload = {
                 contents: [{ parts: [{ text: `Topic: ${userQuery}` }] }],
                 systemInstruction: { parts: [{ text: systemPrompt }] },
@@ -488,59 +488,77 @@
                     responseSchema: {
                         type: "OBJECT",
                         properties: {
-                            query_type: { type: "STRING" },
-                            clarification: { type: "STRING" },
                             title: { type: "STRING" },
                             explanation: { type: "STRING" },
                             visual_simulation_svg: { type: "STRING" }
                         },
-                        required: ["query_type", "title", "explanation", "visual_simulation_svg"]
+                        required: ["title", "explanation", "visual_simulation_svg"]
                     }
                 }
             };
 
-            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const response = await fetch(apiUrl, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payload) 
+            });
+            
             if (!response.ok) throw new Error(`HTTP Fault: ${response.status}`);
             
             const result = await response.json();
-            let rawTextResponse = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+            const rawTextResponse = result?.candidates?.[0]?.content?.parts?.[0]?.text;
             
             if(!rawTextResponse) throw new Error("Empty payload returned");
 
-            // Robust JSON Extraction
+            return extractAndParseJSON(rawTextResponse);
+        }
 
-            let jsonString = rawTextResponse;
-            const startIndex = jsonString.indexOf('{');
-            const endIndex = jsonString.lastIndexOf('}');
-            if (startIndex !== -1 && endIndex !== -1) {
-                jsonString = jsonString.substring(startIndex, endIndex + 1);
+        function extractAndParseJSON(rawText) {
+            let cleaned = rawText.trim();
+            
+            // 1. Remove markdown wrappers if Gemini ignored instructions
+            cleaned = cleaned.replace(/^```(?:json|html|svg)?/i, '');
+            cleaned = cleaned.replace(/```$/i, '');
+            cleaned = cleaned.trim();
+            
+            // 2. Isolate dictionary block
+            const startIdx = cleaned.indexOf('{');
+            const endIdx = cleaned.lastIndexOf('}');
+            
+            if (startIdx !== -1 && endIdx !== -1) {
+                cleaned = cleaned.substring(startIdx, endIdx + 1);
             }
-            // Strip out invisible control characters that frequently break JSON parsers
-            jsonString = jsonString.replace(/[\u0000-\u0019]+/g, "");
+            
+            // 3. Strip unescaped control characters (ASCII 0-31) that break JSON parse, except standard escapes
+            // Note: Carefully avoiding \n \r \t if they are already properly escaped in the string payload, 
+            // but if they are raw, they break JSON. The API normally escapes them. 
+            // To be ultra safe, we rely on standard JSON.parse first.
             try {
-                return JSON.parse(jsonString); 
+                return JSON.parse(cleaned);
+            } catch (err) {
+                console.error("Standard parse failed, attempting strict sanitize...");
+                // Aggressive fallback: replace unescaped literal newlines in strings
+                // This is dangerous but necessary if the LLM output raw multi-line SVG inside the JSON string
+                let sanitized = cleaned.replace(/\n/g, '\\n').replace(/\r/g, '');
+                return JSON.parse(sanitized);
             }
         }
 
         function renderResult(data) {
-            // Apply Q&A styling if it was a generated question
+            // Apply Q&A styling to the title if applicable
             let titlePrefix = data.query_mode === 'generate_qa' 
-                ? '<span class="text-brand-600 block text-lg md:text-2xl mb-2 tracking-widest uppercase">Generated Question:</span> ' 
+                ? '<span class="text-brand-600 block text-lg md:text-2xl mb-3 tracking-widest uppercase font-black">Generated Question:</span> ' 
                 : '';
                 
             document.getElementById('result-title').innerHTML = titlePrefix + (data.title || "Computational Output");
-            
-            const banner = document.getElementById('clarification-banner');
-            if (data.clarification && data.clarification.trim() !== "") {
-                document.getElementById('clarification-text').textContent = data.clarification;
-                banner.classList.remove('hidden');
-            } else { banner.classList.add('hidden'); }
-
-            document.getElementById('result-explanation').innerHTML = data.explanation;
+            document.getElementById('result-explanation').innerHTML = data.explanation || "<p>Data synthesis complete.</p>";
 
             let svgCode = (data.visual_simulation_svg || "").trim();
-            // Just in case the LLM wrapped the SVG field in markdown despite instructions
+            
+            // Cleanup SVG string if the LLM wrapped the inner property in markdown
             svgCode = svgCode.replace(/^```(?:xml|svg|html)?/i, '').replace(/```$/i, '').trim();
+            // Fallback empty state
+            if(!svgCode) svgCode = '<svg viewBox="0 0 100 100"><text x="10" y="50" fill="white">Simulation Unavailable</text></svg>';
             
             currentSvgContent = svgCode;
             document.getElementById('svg-player').innerHTML = svgCode;
@@ -549,24 +567,27 @@
         window.replaySimulation = function() {
             const player = document.getElementById('svg-player');
             player.innerHTML = ''; 
-            setTimeout(() => { player.innerHTML = currentSvgContent; }, 50);
+            // Micro-delay forces browser to remount SVG elements, restarting CSS/SVG animations
+            setTimeout(() => { player.innerHTML = currentSvgContent; }, 30);
         };
 
         async function saveHistory(queryText, resultData) {
             if (!currentUser || !db) return;
             try {
+                // Strict path compliance for permissions
                 const historyRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'history');
                 const docData = {
                     query: queryText, 
                     timestamp: new Date().toISOString(), 
                     title: resultData.title,
-                    type: resultData.query_type || 'theory', 
                     mode: resultData.query_mode || 'explain',
                     resultPayload: JSON.stringify(resultData) 
                 };
                 await addDoc(historyRef, docData);
                 loadHistory(); 
-            } catch (error) { console.error("Vault write error", error); }
+            } catch (error) { 
+                console.error("Vault write error", error); 
+            }
         }
 
         async function loadHistory() {
@@ -576,10 +597,12 @@
             
             try {
                 const historyRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'history');
-                const snapshot = await getDocs(historyRef); 
+                const snapshot = await getDocs(historyRef); // No complex queries (orderBy/limit) allowed
                 
                 const items = [];
                 snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+                
+                // Client-side sorting descending
                 items.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); 
                 historyData = items;
                 
@@ -595,20 +618,21 @@
                 historyList.innerHTML = '';
                 
                 items.forEach((item, index) => {
-                    const date = new Date(item.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+                    const dateObj = new Date(item.timestamp);
+                    const date = !isNaN(dateObj) ? dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' }) : 'Unknown Date';
 
                     const el = document.createElement('div');
                     el.className = 'bg-white border-2 border-stone-200 rounded-[2rem] p-6 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-5 group transform hover:-translate-y-1';
                     el.onclick = () => loadFromHistory(index);
                     
                     const isQA = item.mode === 'generate_qa';
+                    const isCode = item.query.toLowerCase().includes('python') || item.query.toLowerCase().includes('code') || item.query.toLowerCase().includes(' c ');
                     
-                    // Different icons based on type/mode
                     let iconClass, iconSvg;
                     if (isQA) {
                         iconClass = 'text-brand-600 bg-brand-50 border-brand-200';
                         iconSvg = `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-                    } else if (item.type === 'code' || item.query.toLowerCase().includes('python') || item.query.toLowerCase().includes(' c ')) {
+                    } else if (isCode) {
                         iconClass = 'text-forest-600 bg-forest-50 border-forest-200';
                         iconSvg = `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>`;
                     } else {
@@ -617,20 +641,20 @@
                     }
 
                     const modeBadge = isQA 
-                        ? `<span class="bg-brand-100 text-brand-800 text-[10px] uppercase font-black px-2 py-0.5 rounded-md border border-brand-200 mr-2">Q & A</span>` 
+                        ? `<span class="bg-brand-100 text-brand-800 text-[10px] uppercase font-black px-2 py-0.5 rounded-md border border-brand-200 mr-3 shadow-sm">Q & A</span>` 
                         : '';
 
                     el.innerHTML = `
-                        <div class="flex items-center gap-6 min-w-0">
+                        <div class="flex items-center gap-6 min-w-0 flex-1">
                             ${iconSvg}
                             <div class="min-w-0 flex-1">
-                                <h4 class="font-black text-stone-900 truncate text-xl leading-tight mb-1 flex items-center">${modeBadge}${item.title || "Query"}</h4>
+                                <h4 class="font-black text-stone-900 truncate text-xl md:text-2xl leading-tight mb-1 flex items-center">${modeBadge}${item.title || "Query"}</h4>
                                 <p class="text-base text-stone-500 truncate font-semibold">"${item.query}"</p>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between sm:justify-end gap-5 sm:min-w-fit">
-                            <span class="text-sm font-bold text-stone-400 bg-stone-50 border border-stone-200 px-4 py-2 rounded-xl">${date}</span>
-                            <div class="w-12 h-12 rounded-full bg-stone-50 border-2 border-stone-200 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-600 transition-colors shadow-sm">
+                        <div class="flex items-center justify-between sm:justify-end gap-5 sm:min-w-fit mt-4 sm:mt-0">
+                            <span class="text-sm font-bold text-stone-500 bg-stone-100 border border-stone-200 px-4 py-2 rounded-xl shadow-inner">${date}</span>
+                            <div class="w-12 h-12 rounded-full bg-stone-50 border-2 border-stone-200 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white group-hover:border-brand-600 transition-colors shadow-sm shrink-0">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
                             </div>
                         </div>
@@ -645,15 +669,17 @@
             if(item && item.resultPayload) {
                 try {
                     const parsedData = JSON.parse(item.resultPayload);
-                    // Ensure older history items get the mode applied if missing
+                    // Inject mode if viewing older payload structures
                     if(!parsedData.query_mode) parsedData.query_mode = item.mode || 'explain';
                     renderResult(parsedData); 
                     navigateTo('result');
-                } catch(e) { showError("Vault data corruption detected."); }
+                } catch(e) { showError("Vault data corruption detected for this entry."); }
             }
         };
 
+        // Bootstrap App
         setupAuth();
+
     </script>
 </body>
 </html>
