@@ -12,7 +12,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
                         brand: { // Earthy Golds and Browns
@@ -110,7 +110,7 @@
                     <svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-black text-stone-900 truncate" id="user-name-display">Authenticating...</p>
+                    <p class="text-sm font-black text-stone-900 truncate" id="user-name-display">Not Authenticated</p>
                     <p class="text-xs text-brand-600 truncate font-bold mt-1 uppercase tracking-wider">Identity Settings</p>
                 </div>
             </div>
@@ -133,7 +133,6 @@
         <!-- Home / Search View -->
         <div id="view-home" class="flex-1 overflow-y-auto w-full flex flex-col items-center justify-center p-6 transition-opacity duration-500">
             <div class="max-w-4xl w-full text-center space-y-8">
-                
                 <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-forest-100 border-2 border-forest-200 text-forest-800 text-sm font-black shadow-sm mb-4 tracking-wide uppercase">
                     <div class="w-2.5 h-2.5 rounded-full bg-forest-500 animate-pulse"></div>
                     A++ Academic Engine Online
@@ -226,7 +225,7 @@
                         </div>
                         <div class="bg-brand-50 border border-brand-200 rounded-2xl p-5 shadow-inner">
                             <p class="text-sm text-brand-800 font-bold flex items-start gap-3 leading-relaxed">
-                                <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 This dynamic visual model is natively generated via raw vector mathematics corresponding to your query parameters.
                             </p>
                         </div>
@@ -269,50 +268,63 @@
                 </div>
                 <h3 class="text-3xl md:text-4xl font-black text-stone-900">Identity Config</h3>
             </div>
-            <p class="text-lg text-stone-600 mb-10 font-medium leading-relaxed">Establish your academic profile. Your research history and session tokens are cryptographically tied to this identity.</p>
+            <p class="text-lg text-stone-600 mb-10 font-medium leading-relaxed">Establish your academic profile. Log in with Google to tie your research history and session tokens cryptographically to your identity.</p>
             
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-sm font-black text-stone-800 mb-3 uppercase tracking-widest">Display Alias</label>
-                    <input type="text" id="profile-name-input" class="w-full px-6 py-5 bg-stone-50 border-2 border-stone-300 rounded-2xl focus:ring-4 focus:ring-brand-500/30 focus:border-brand-600 outline-none transition-all text-stone-900 font-bold text-xl" placeholder="e.g., Dr. Alan Turing">
+            <div class="space-y-6" id="auth-unlogged">
+                <button onclick="signInWithGoogle()" class="w-full py-5 bg-white border-2 border-stone-200 text-stone-800 font-black rounded-2xl hover:bg-stone-50 hover:border-brand-500 transition-all shadow-sm text-lg flex items-center justify-center gap-4">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Sign in with Google
+                </button>
+            </div>
+            
+            <div class="space-y-6 hidden" id="auth-logged">
+                <div class="px-6 py-5 bg-forest-50 border-2 border-forest-200 rounded-2xl flex items-center justify-between">
+                    <span class="font-bold text-forest-800">Authenticated successfully.</span>
+                    <button onclick="logOut()" class="text-forest-900 underline text-sm font-bold">Sign Out</button>
                 </div>
-                <div class="flex justify-end gap-4 mt-12">
-                    <button onclick="closeProfileModal()" class="px-8 py-4 text-stone-700 font-bold hover:bg-stone-100 rounded-2xl transition-colors text-lg">Cancel</button>
-                    <button onclick="saveProfile()" class="px-8 py-4 bg-stone-900 text-white font-black rounded-2xl hover:bg-brand-700 transition-all shadow-lg hover:shadow-xl text-lg">Update Records</button>
-                </div>
+            </div>
+
+            <div class="flex justify-end gap-4 mt-8">
+                <button onclick="closeProfileModal()" class="px-8 py-4 text-stone-700 font-bold hover:bg-stone-100 rounded-2xl transition-colors text-lg">Close</button>
             </div>
         </div>
     </div>
 
     <!-- Error Toast -->
-    <div id="error-toast" class="fixed bottom-10 right-10 left-10 md:left-auto bg-white border-l-8 border-red-600 text-stone-900 px-8 py-6 rounded-[2rem] shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-5 max-w-lg">
+    <div id="error-toast" class="fixed bottom-10 right-10 left-10 md:left-auto bg-white border-l-8 border-red-600 text-stone-900 px-8 py-6 rounded-[2rem] shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-5 max-w-xl">
         <div class="bg-red-50 p-3 rounded-2xl text-red-600 border border-red-100 shrink-0">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
         <div class="flex flex-col">
-            <span class="font-black text-xl text-stone-900">System Fault</span>
-            <span id="error-toast-msg" class="font-medium text-stone-600 text-sm mt-1">An error occurred.</span>
+            <span class="font-black text-xl text-stone-900" id="error-toast-title">System Fault</span>
+            <span id="error-toast-msg" class="font-medium text-stone-600 text-sm mt-1 leading-tight">An error occurred.</span>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Environment variables mapped safely
+        // ========================================================================
+        // ⚠️ INSERT YOUR GOOGLE AI STUDIO API KEY HERE
+        // ========================================================================
+        const API_KEY = 'AQ.Ab8RN6InKJoxjhTYRUQ_ac4PfTKA7c-2DRsAsleQB5dJKymZ2Q'; 
+
+        // Environment variables safely mapped for Canvas/Firebase
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'qecubs-engine';
         let firebaseConfig = {};
         try { firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {}; } 
         catch (e) { console.warn("Local env: Firebase config not found."); }
 
-        let auth, db;
+        let auth, db, provider;
         try {
             const app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
+            provider = new GoogleAuthProvider();
         } catch(e) {
-            console.warn("Firebase initialized bypassed - running in isolated mode.");
+            console.warn("Firebase initialization bypassed - running in isolated mode.");
         }
 
         let currentUser = null;
@@ -331,27 +343,26 @@
             history: document.getElementById('nav-history')
         };
 
-        async function setupAuth() {
-            if(!auth) return;
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                showError("Auth fault. Data persistence to Vault disabled.");
-            }
-        }
-
         if(auth) {
             onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    currentUser = user;
-                    updateProfileUI();
-                    loadHistory();
-                }
+                currentUser = user;
+                updateProfileUI();
+                if(user) loadHistory();
             });
+        }
+
+        window.signInWithGoogle = async function() {
+            if(!auth) return showError("Auth system offline.", "System Error");
+            try {
+                await signInWithPopup(auth, provider);
+            } catch(e) {
+                showError("Sign in failed or cancelled.", "Auth Error");
+            }
+        };
+
+        window.logOut = async function() {
+            if(!auth) return;
+            try { await signOut(auth); } catch(e) {}
         }
 
         window.navigateTo = function(viewName) {
@@ -359,7 +370,6 @@
             if(views[viewName]) {
                 views[viewName].classList.remove('hidden');
                 
-                // Update navigation visual states safely
                 if(viewName !== 'loading' && viewName !== 'result') {
                     Object.values(navBtns).forEach(btn => {
                         btn.className = btn.className.replace(/bg-brand-50|text-brand-800|border-brand-200|shadow-sm|border-transparent/g, '');
@@ -376,42 +386,40 @@
         };
 
         window.openProfileModal = function() {
-            document.getElementById('profile-name-input').value = currentUser?.displayName || '';
-            const modal = document.getElementById('profile-modal');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
+            document.getElementById('profile-modal').classList.remove('hidden');
+            document.getElementById('profile-modal').classList.add('flex');
+            updateProfileUI();
         };
         window.closeProfileModal = function() {
-            const modal = document.getElementById('profile-modal');
-            modal.classList.add('hidden'); modal.classList.remove('flex');
-        };
-
-        window.saveProfile = async function() {
-            const name = document.getElementById('profile-name-input').value.trim();
-            if (name && currentUser) {
-                try {
-                    await updateProfile(currentUser, { displayName: name });
-                    updateProfileUI(); closeProfileModal();
-                } catch (e) { showError("Identity update failed."); }
-            }
+            document.getElementById('profile-modal').classList.add('hidden');
+            document.getElementById('profile-modal').classList.remove('flex');
         };
 
         function updateProfileUI() {
             const nameDisplay = document.getElementById('user-name-display');
             const avatar = document.getElementById('user-avatar');
+            const unlogged = document.getElementById('auth-unlogged');
+            const logged = document.getElementById('auth-logged');
+
             if (currentUser && currentUser.displayName) {
                 nameDisplay.textContent = currentUser.displayName;
                 avatar.innerHTML = currentUser.displayName.charAt(0).toUpperCase();
+                unlogged.classList.add('hidden');
+                logged.classList.remove('hidden');
             } else {
                 nameDisplay.textContent = "Guest Researcher";
                 avatar.innerHTML = `<svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>`;
+                unlogged.classList.remove('hidden');
+                logged.classList.add('hidden');
             }
         }
 
-        function showError(msg) {
+        function showError(msg, title = "System Fault") {
             const toast = document.getElementById('error-toast');
+            document.getElementById('error-toast-title').textContent = title;
             document.getElementById('error-toast-msg').textContent = msg;
             toast.classList.remove('translate-y-40', 'opacity-0');
-            setTimeout(() => { toast.classList.add('translate-y-40', 'opacity-0'); }, 6000);
+            setTimeout(() => { toast.classList.add('translate-y-40', 'opacity-0'); }, 7000);
         }
 
         window.quickSearch = function(query, mode) {
@@ -422,13 +430,18 @@
         window.triggerSearch = async function(mode) {
             const queryText = document.getElementById('search-input').value.trim();
             if(!queryText) {
-                showError("Please enter a topic or paste code to research.");
+                showError("Please enter a topic or paste code to research.", "Input Required");
                 return;
             }
             await processSearch(queryText, mode);
         }
 
         async function processSearch(queryText, mode, saveToHist = true) {
+            if (API_KEY === 'YOUR_API_KEY_HERE') {
+                showError("The system is missing a valid API Key. Please update the API_KEY variable at the top of the script.", "API Key Missing");
+                return;
+            }
+
             navigateTo('loading');
             
             const isQaMode = mode === 'generate_qa';
@@ -436,14 +449,13 @@
                 "Deconstructing advanced scientific parameters...",
                 "Executing strict mathematical analysis...",
                 "Rendering high-fidelity visual physics model...",
-                isQaMode ? "Generating complex academic question..." : "Compiling academic breakdown...",
-                "Synthesizing algorithmic structures..."
+                isQaMode ? "Generating complex academic question..." : "Compiling academic breakdown..."
             ];
             document.getElementById('loading-text').textContent = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
 
             try {
                 const resultData = await callGeminiAPI(queryText, mode);
-                resultData.query_mode = mode; // Inject mode into payload for history referencing
+                resultData.query_mode = mode; 
                 
                 if (saveToHist && currentUser && db) {
                     await saveHistory(queryText, resultData);
@@ -454,32 +466,35 @@
                 document.getElementById('search-input').value = ''; 
             } catch (error) {
                 console.error("Engine Fault:", error);
-                showError("Data Extraction Failure. The AI returned an invalid schema structure. Please alter your query and try again.");
+                
+                // Explicit 401 Unauthorized check
+                if(error.message.includes("401")) {
+                    showError("HTTP 401 Unauthorized: The API Key provided is invalid, restricted, or inactive. Please verify it in Google AI Studio.", "Authentication Rejected");
+                } else {
+                    showError("Data Extraction Failure. The AI returned an invalid structure. Please alter your query and try again.");
+                }
                 navigateTo('home');
             }
         }
 
         async function callGeminiAPI(userQuery, mode) {
-            const apiKey = 'AQ.Ab8RN6InKJoxjhTYRUQ_ac4PfTKA7c-2DRsAsleQB5dJKymZ2Q'; // Managed dynamically by Canvas
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
             const instructionLogic = mode === 'generate_qa' 
                 ? `You must FIRST generate a highly challenging, academic-level QUESTION regarding the topic "${userQuery}". Then provide the detailed ANSWER in the 'explanation' field. The 'title' should be the generated question.`
                 : `Explain the topic "${userQuery}" in extreme, academic detail in the 'explanation' field.`;
 
-            // STRICT PROMPTING to avoid JSON corruption on complex SVGs
-            const systemPrompt = `You are QECUBS, an A++ elite academic tutor and highly advanced simulation engine. Provide mathematically and scientifically flawless explanations.
+            const systemPrompt = `You are QECUBS, an A++ elite academic tutor and simulation engine.
 
             ${instructionLogic}
 
-            CRITICAL DIRECTIVES:
-            1. Output strictly valid JSON matching the schema.
-            2. 'explanation': Use HTML tags (<p>, <strong>, <h3>, <ul>, <pre>, <code>) for formatting. Include formulas. Be extremely thorough.
-            3. 'visual_simulation_svg': CRITICAL. Generate a highly accurate, beautifully animated, raw SVG string (must include viewBox). It MUST contain <animate>, <animateTransform>, or CSS animations to act as a dynamic video simulation of the concept. 
-            4. Use vibrant colors suitable for a dark background (#1c1917).
-            5. IMPORTANT: DO NOT WRAP YOUR RESPONSE IN MARKDOWN BACKTICKS. DO NOT INCLUDE \`\`\`json. ESCAPE ALL INTERNAL QUOTES AND NEWLINES PROPERLY TO ENSURE VALID JSON.`;
+            CRITICAL DIRECTIVES FOR JSON OUTPUT:
+            1. You MUST respond with a single, raw JSON object containing exactly three keys: "title", "explanation", and "visual_simulation_svg".
+            2. 'explanation': Use HTML tags (<p>, <strong>, <h3>, <ul>, <pre>, <code>). Be extremely thorough.
+            3. 'visual_simulation_svg': Generate highly accurate, beautifully animated SVG code (must include viewBox). Use <animate> or CSS to make it a dynamic visual model. Colors should look good on a very dark background.
+            4. DO NOT wrap the JSON in markdown blocks (like \`\`\`json). Just return the raw { "title": "...", ... } dictionary. Escape quotes within strings properly.`;
 
-            // Enforcing JSON application mode
+            // Explicitly requesting application/json WITHOUT strict schema to prevent crashes
             const payload = {
                 contents: [{ parts: [{ text: `Topic: ${userQuery}` }] }],
                 systemInstruction: { parts: [{ text: systemPrompt }] },
@@ -494,7 +509,9 @@
                 body: JSON.stringify(payload) 
             });
             
-            if (!response.ok) throw new Error(`HTTP Fault: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`HTTP Fault: ${response.status}`);
+            }
             
             const result = await response.json();
             const rawTextResponse = result?.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -508,11 +525,9 @@
             let cleaned = rawText.trim();
             
             // 1. Remove markdown wrappers if Gemini ignored instructions
-            cleaned = cleaned.replace(/^```(?:json|html|svg)?/i, '');
-            cleaned = cleaned.replace(/```$/i, '');
-            cleaned = cleaned.trim();
+            cleaned = cleaned.replace(/^```(?:json|html|svg)?/i, '').replace(/```$/i, '').trim();
             
-            // 2. Isolate dictionary block
+            // 2. Isolate exactly the JSON dictionary block
             const startIdx = cleaned.indexOf('{');
             const endIdx = cleaned.lastIndexOf('}');
             
@@ -520,23 +535,20 @@
                 cleaned = cleaned.substring(startIdx, endIdx + 1);
             }
             
-            // 3. Strip unescaped control characters (ASCII 0-31) that break JSON parse, except standard escapes
-            // Note: Carefully avoiding \n \r \t if they are already properly escaped in the string payload, 
-            // but if they are raw, they break JSON. The API normally escapes them. 
-            // To be ultra safe, we rely on standard JSON.parse first.
+            // 3. Strip out invisible control characters that break JSON parsing (Null, Shift Out, etc)
+            cleaned = cleaned.replace(/[\u0000-\u0019]+/g, "");
+            
             try {
                 return JSON.parse(cleaned);
             } catch (err) {
                 console.error("Standard parse failed, attempting strict sanitize...");
                 // Aggressive fallback: replace unescaped literal newlines in strings
-                // This is dangerous but necessary if the LLM output raw multi-line SVG inside the JSON string
                 let sanitized = cleaned.replace(/\n/g, '\\n').replace(/\r/g, '');
                 return JSON.parse(sanitized);
             }
         }
 
         function renderResult(data) {
-            // Apply Q&A styling to the title if applicable
             let titlePrefix = data.query_mode === 'generate_qa' 
                 ? '<span class="text-brand-600 block text-lg md:text-2xl mb-3 tracking-widest uppercase font-black">Generated Question:</span> ' 
                 : '';
@@ -545,10 +557,7 @@
             document.getElementById('result-explanation').innerHTML = data.explanation || "<p>Data synthesis complete.</p>";
 
             let svgCode = (data.visual_simulation_svg || "").trim();
-            
-            // Cleanup SVG string if the LLM wrapped the inner property in markdown
             svgCode = svgCode.replace(/^```(?:xml|svg|html)?/i, '').replace(/```$/i, '').trim();
-            // Fallback empty state
             if(!svgCode) svgCode = '<svg viewBox="0 0 100 100"><text x="10" y="50" fill="white">Simulation Unavailable</text></svg>';
             
             currentSvgContent = svgCode;
@@ -558,14 +567,12 @@
         window.replaySimulation = function() {
             const player = document.getElementById('svg-player');
             player.innerHTML = ''; 
-            // Micro-delay forces browser to remount SVG elements, restarting CSS/SVG animations
             setTimeout(() => { player.innerHTML = currentSvgContent; }, 30);
         };
 
         async function saveHistory(queryText, resultData) {
             if (!currentUser || !db) return;
             try {
-                // Strict path compliance for permissions
                 const historyRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'history');
                 const docData = {
                     query: queryText, 
@@ -575,7 +582,6 @@
                     resultPayload: JSON.stringify(resultData) 
                 };
                 await addDoc(historyRef, docData);
-                loadHistory(); 
             } catch (error) { 
                 console.error("Vault write error", error); 
             }
@@ -588,12 +594,10 @@
             
             try {
                 const historyRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'history');
-                const snapshot = await getDocs(historyRef); // No complex queries (orderBy/limit) allowed
+                const snapshot = await getDocs(historyRef); 
                 
                 const items = [];
                 snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-                
-                // Client-side sorting descending
                 items.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); 
                 historyData = items;
                 
@@ -617,23 +621,13 @@
                     el.onclick = () => loadFromHistory(index);
                     
                     const isQA = item.mode === 'generate_qa';
-                    const isCode = item.query.toLowerCase().includes('python') || item.query.toLowerCase().includes('code') || item.query.toLowerCase().includes(' c ');
                     
-                    let iconClass, iconSvg;
-                    if (isQA) {
-                        iconClass = 'text-brand-600 bg-brand-50 border-brand-200';
-                        iconSvg = `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-                    } else if (isCode) {
-                        iconClass = 'text-forest-600 bg-forest-50 border-forest-200';
-                        iconSvg = `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>`;
-                    } else {
-                        iconClass = 'text-stone-700 bg-stone-100 border-stone-300';
-                        iconSvg = `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>`;
-                    }
+                    let iconClass = isQA ? 'text-brand-600 bg-brand-50 border-brand-200' : 'text-stone-700 bg-stone-100 border-stone-300';
+                    let iconSvg = isQA 
+                        ? `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+                        : `<svg class="w-12 h-12 ${iconClass} p-2.5 rounded-2xl border-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>`;
 
-                    const modeBadge = isQA 
-                        ? `<span class="bg-brand-100 text-brand-800 text-[10px] uppercase font-black px-2 py-0.5 rounded-md border border-brand-200 mr-3 shadow-sm">Q & A</span>` 
-                        : '';
+                    const modeBadge = isQA ? `<span class="bg-brand-100 text-brand-800 text-[10px] uppercase font-black px-2 py-0.5 rounded-md border border-brand-200 mr-3 shadow-sm">Q & A</span>` : '';
 
                     el.innerHTML = `
                         <div class="flex items-center gap-6 min-w-0 flex-1">
@@ -660,17 +654,12 @@
             if(item && item.resultPayload) {
                 try {
                     const parsedData = JSON.parse(item.resultPayload);
-                    // Inject mode if viewing older payload structures
                     if(!parsedData.query_mode) parsedData.query_mode = item.mode || 'explain';
                     renderResult(parsedData); 
                     navigateTo('result');
                 } catch(e) { showError("Vault data corruption detected for this entry."); }
             }
         };
-
-        // Bootstrap App
-        setupAuth();
-
     </script>
 </body>
 </html>
